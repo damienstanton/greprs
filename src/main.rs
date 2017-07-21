@@ -3,15 +3,13 @@ extern crate greprs;
 use std::env;
 use std::process;
 use greprs::Config;
-use greprs::run;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let config = Config::new(&args).unwrap_or_else(|err| {
-        process::exit(1);
-    });
+    let config = Config::new(&args).unwrap();
 
-    if let Err(e) = run(config) {
+    if let Err(e) = greprs::run(config) {
+        println!("Error: {}", e);
         process::exit(1);
     }
 }
